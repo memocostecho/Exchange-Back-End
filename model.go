@@ -1,25 +1,13 @@
-package secretobject
+package exchange
 
 import "time"
 import "appengine/datastore"
 
 
-type RegisteredDevice struct {
-  Key     *datastore.Key `json:"id" datastore:"-"`
-  Rid  string         `json:"registrationID"`
-  Date time.Time  `json:"date"`   
-
-}
-
-// GreetingsList is a response type of GreetingService.List method
-type RegisteredDevices struct {
-  RegisteredDevices []*RegisteredDevice `json:"devices"`
-}
 
 
-type UserExchanges struct {
-  UserExchanges []*Exchange_User `json:"exchanges"`
-}
+
+
 
 type UserExchangesReq struct {
 
@@ -34,14 +22,30 @@ type ExchangesUserReq struct {
 
 }
 
+type TriggerRippleReq struct {
+
+  ExchangeId string  `json:"exchangeId"`
+
+}
+
+
+type TriggerRippleRespDummy struct {
+
+  Arreglo []int  `json:"arreglo"`
+
+
+}
+
 
 type User struct{
 
   Key     *datastore.Key `json:"id" datastore:"-"`
   Mail  string         `json:"mail"`
   Name  string         `json:"name"`
-  Date time.Time  `json:"date"`   
+  Date time.Time  `json:"date"`
+  OS string `json:"os"`
   Device string `json:"deviceRegistered"`
+  Exchanges []string  `json:"exchanges"`  //`datastore:"-"`
 
 
 }
@@ -53,23 +57,69 @@ type Exchange struct{
   Reason string         `json:"reason"`
   ExchangeId string         `json:"exchangeId"`
   Ammount string        `json:"ammount"`
+  Users []string `json:"users"` //`datastore:"-"`
 
 
 }
 
 
-type Exchange_User struct{
+type ExchangesResp struct{
 
- Key     *datastore.Key `json:"id" datastore:"-"`
- User string  `json:"user"`
- Exchange Exchange  `json:"exchange"`
- Administrator string        `json:"administrator"`
- Token string   `json:"token"`
-
-
+  UserExchanges []*Exchange `json:"userExchanges"`
 
 }
 
+
+
+type UsersResp struct{
+
+  ExchangeUsers []*User `json:"exchangeUsers"`
+
+}
+
+
+
+
+
+type CreateExchangeReq struct{
+
+  Exchange *Exchange  `json:"exchange"`
+  Usermail  string  `json:"useremail"`
+
+}
+
+
+type GetExchangesReq struct{
+
+  
+  Usermail  string  `json:"useremail"`
+
+}
+
+
+type GetUsersReq struct{
+
+  
+  ExchangeId  string  `json:"exchangeId"`
+
+}
+
+type JoinExchangeReq struct{
+
+  
+  Usermail  string  `json:"useremail"`
+  ExchangeId  string  `json:"exchangeId"`
+
+}
+
+
+type JoinExchangeResp struct{
+
+  
+  ExitoJoin  string  `json:"exitoBool"`
+  
+
+}
 
 
 

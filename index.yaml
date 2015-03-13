@@ -1,6 +1,0 @@
-indexes:
-- kind: Exchange_User
-  ancestor: no
-  properties:
-  - name: User
-  - name: Exchange.ExchangeId
